@@ -1,0 +1,16 @@
+[[package]]
+category = "main"
+description = "Python Distribution Utilities"
+name = "python-ian-utils"
+optional = false
+python-versions = "*"
+version = "1.0"
+
+[metadata]
+content-hash = "657273d6eabb676e40654ae96c142982e17c3b75753e91576edefe770eb204ed"
+python-versions = "^3.8"
+
+[metadata.files]
+python-ian-utils = [
+    {file = "python_ian_utils-1.0.tar.gz", hash = "sha256:99e54a7f5b6379f69da7b1d942f569ea15519f4236af52d72a50bbd3450f511b"},
+]

@@ -28,3 +28,24 @@
 #
 #Delete these comments before commit!
 #Good luck.
+
+import diary
+
+
+first_c= diary.diary([],"1C",[],[])
+second_c= diary.diary([],"2C",[],[])
+first_a= diary.diary([],"1a",[],[])
+
+first_c.add_student("Janek","Kowalski")
+first_c.add_student("Tomasz","Grzegrzółka")
+first_c.add_student("Wacław","Gombrowicz")
+
+first_c.add_score(1,"Przyroda",5)
+first_c.add_score(1,"Przyroda",4)
+first_c.add_score(1,"Przyroda",4)
+first_c.add_score(1,"WF",1)
+first_c.add_score(1,"WF",1)
+
+print(first_c.get_student_total_average(1))
+print(first_c.get_student_subject_average(1,"Przyroda"))
+print(first_c.get_student_subject_average(1,"WF"))
