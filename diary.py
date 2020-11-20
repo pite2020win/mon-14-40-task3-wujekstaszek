@@ -1,40 +1,65 @@
-import dataclass
-import student
-import score
-import time
-@dataclass
+from dataclasses import dataclass
+import datetime
+import statistics
 
-class diary:
-  students : list[student.student]
+@dataclass
+class Student:
+  name: str
+  surname: str
+  diary_number: int
+
+@dataclass
+class Score:
+  student_nr: int
+  subject: str
+  score: int
+
+@dataclass
+class Attendance:
+  date : datetime.date
+  check : list[int,bool]
+
+
+@dataclass
+class Diary:
+  students : list[Student]
   class_sign : str
-  scores : list[score.score]
-  attendance : list[list[time.date,int]]
+  scores : list[Score]
+  attendances : list[Attendance]
   
-  def add_score(self,student_nr,subject,score):
-    if(6<score or 1>score): 
+  def add_score(self,student_nr,subject,new_score):
+    if(6<new_score or 1>new_score): 
       return 0;
-    self.scores.append(score.score(student_nr,subject,score))
+    self.scores.append(Score(student_nr,subject,new_score))
 
   def add_student(self,name,surname):
-    #to powinna być zaawansowana logika zmiany numeru, tak by były alfabetycznie, ale nie ma czasu :(
-    self.students.append(student.student(name,surname,len(self.students)))
+    self.students.append(Student(name,surname,len(self.students)))
     return len(self.students)-1
 
-def get_student_total_avarage(self,student_nr):
-  score_sum = 0;
-  cnt = 0;
-  for single_score in self.scores:
-    if single_score.student_nr == student_nr:
-      score_sum += single_score.score
-      cnt += 1
-  return score_sum/cnt
+  def get_student_total_average(self,student_nr):
+    scores = list(filter(lambda x: x.student_nr == student_nr,self.scores))
+    mean = statistics.mean([x.score for x in scores])
+    return mean
 
-def get_student_subject_avarage(self,student_nr,subject):
-  score_sum = 0;
-  cnt = 0;
-  for single_score in self.scores:
-    if single_score.student_nr == student_nr and single_score.subject == subject:
-      score_sum += single_score.score
-      cnt += 1
-  return score_sum/cnt
 
+  def get_student_subject_average(self,student_nr,subject):
+    scores = list(filter(lambda x: x.student_nr == student_nr and x.subject == subject,self.scores))
+    mean = statistics.mean([x.score for x in scores])
+    return mean
+
+
+  def add_attendance(self,date:datetime.date,lesson:int,check:bool):
+    
+    date_attandance = list(filter(lambda x:x.date == date,self.attendances))
+    if date_attandance:  
+      single_check = list(filter(lambda x:x[0] == lesson,date_attandance[0].check))
+      if single_check:
+        single_check[0][1] = check    
+      else:
+        single_check[0].append([lesson,check])
+    else:
+      date_attandance.append(Attendance(date,[lesson,check]))
+
+  def class_average(self):
+    mean = statistics.mean([x.score for x in self.scores])
+    return mean
